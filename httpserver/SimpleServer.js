@@ -18,13 +18,15 @@ app.get('/', function(req, res) {
     console.log("req: " + req);
 });
 
-
+//http://localhost:12306/kline?db=okex1516531
 app.get('/kline/',function (req,res) {
     console.log("originalUrl: " + req.originalUrl)
+    var db = req.query.db;
+    console.log("db: " + db);
     res.status(200)
     var lvdata = [];
     var find = {}
-    find["prefix"] = "okex151653"
+    find["prefix"] = db;
     levelDb.find(find,function (key,value) {
         //lvdatavalue;
         if(key==null) {
