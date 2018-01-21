@@ -1,5 +1,5 @@
 var levelup = require('level');
-var db = levelup('D:\\job\\leveldb'); //这里的路径就是物理存储数据的文件路径,建议不要放到项目中.
+var db = levelup(__dirname + "kline1m"); //这里的路径就是物理存储数据的文件路径,建议不要放到项目中.
 
 function put(key, value, callback) {
     if (key && value) {
