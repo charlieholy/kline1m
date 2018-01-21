@@ -56,7 +56,7 @@ socket.onmessage = function (event) {
                 console.log("data: " + data[0]);
                 var timestamp = data[0][0];
                 console.log("t: "  + lp+timestamp);
-                LevelDb.put(lp+timestamp,data[0],function (err,info) {
+                LevelDb.put(lp+timestamp,data[0],function (err) {
                     if(err){
                         console.log("okex leveldb err: " + err);
                     }

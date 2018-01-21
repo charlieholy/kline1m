@@ -30,10 +30,15 @@ app.get('/kline/',function (req,res) {
     levelDb.find(find,function (key,value) {
         //lvdatavalue;
         if(key==null) {
-            res.send(lvdata)
+            res.json(lvdata)
         }
         console.log(value);
-        lvdata.push(value);
+        try {
+            lvdata.push(JSON.parse(value));
+        }
+        catch (e){
+
+        }
     })
 
 });
