@@ -28,7 +28,7 @@ var connect = function () {
     socket.onmessage = function (event) {
         let raw_data = event.data;
         let data = JSON.parse(raw_data);
-        console.log("da: " + raw_data)
+        //console.log("da: " + raw_data)
         if (data.length > 1) {
             if (data[1][0].length > 1) {
                 return
