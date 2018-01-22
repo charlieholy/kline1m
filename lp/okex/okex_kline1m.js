@@ -26,7 +26,7 @@ function checkConnect() {
 }
 
 socket.onopen = function (event) {
-    console.log('WebSocket connect at time: ' + new Date());
+    console.log(lp+' WebSocket connect at time: ' + new Date());
     socket.send(substr);
     setInterval(checkConnect,5000);
 };
@@ -53,10 +53,22 @@ socket.onmessage = function (event) {
         if(indexdata.data){
             var data = indexdata.data;
             if(data.length> 0){
-                console.log("data: " + data[0]);
-                var timestamp = data[0][0];
-                console.log("t: "  + lp+timestamp);
-                LevelDb.put(lp+timestamp,data[0],function (err) {
+                //console.log("data: " + data[0]);
+                var tick = data[0];
+                //[时间,开盘价,最高价,最低价,收盘价,成交量]
+                if(tick.length < 5)
+                    return ;
+                var kl = {}
+                var ts = tick[0]
+                kl["ts"]= ts;
+                kl["amount"] = tick[5]
+                kl["open"] = tick[1]
+                kl["close"] = tick[4]
+                kl["low"] = tick[3]
+                kl["high"] = tick[2]
+                var key = lp+ts
+                var value = kl
+                LevelDb.put(key,JSON.stringify(kl),function (err) {
                     if(err){
                         console.log("okex leveldb err: " + err);
                     }

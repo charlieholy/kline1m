@@ -32,7 +32,7 @@ app.get('/kline/',function (req,res) {
         if(key==null) {
             res.json(lvdata)
         }
-        console.log(value);
+        //console.log(value);
         try {
             lvdata.push(JSON.parse(value));
         }

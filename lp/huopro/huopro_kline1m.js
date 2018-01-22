@@ -6,7 +6,7 @@ let lp = "huopro"
 const socket = new WebSocket('wss://api.huobi.pro/ws'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
 
 socket.onopen = function (event) {
-    console.log('WebSocket connect at time: ' + new Date());
+    console.log(lp + ' WebSocket connect at time: ' + new Date());
     socket.send(JSON.stringify({'sub': 'market.btcusdt.kline.1min'}));
 };
 
@@ -15,9 +15,16 @@ socket.onmessage = function (event) {
     let json = pako.inflate(new Uint8Array(raw_data), {to: 'string'});
     let data = JSON.parse(json);
 
-    console.log('WebSocket receive message at time: ' + new Date());
-    console.log(data);
+    //console.log('WebSocket receive message at time: ' + new Date());
+    //console.log(data);
     //
+    /* deal with server heartbeat */
+    if (data['ping']) {
+        //console.log('WebSocket receive ping and return pong at time: ' + new Date());
+        socket.send(JSON.stringify({'pong': data['ping']}));
+        return ;
+    }
+
     var ts = data.ts;
     var tick = data.tick;
     // "amount": 成交量,
@@ -35,17 +42,14 @@ socket.onmessage = function (event) {
         kl["close"] = tick.close
         kl["low"] = tick.low
         kl["high"] = tick.high
+        LevelDb.put(lp+ts,JSON.stringify(kl),function (err) {
+            if(err){
+                console.log("huopro leveldb err: " + err);
+            }
+        });
     }
-    LevelDb.put(lp+ts,JSON.stringify(kl),function (err) {
-        if(err){
-            console.log("okex leveldb err: " + err);
-        }
-    });
-    /* deal with server heartbeat */
-    if (data['ping']) {
-        console.log('WebSocket receive ping and return pong at time: ' + new Date());
-        socket.send(JSON.stringify({'pong': data['ping']}));
-    }
+
+
 };
 
 socket.onclose = function(event) {

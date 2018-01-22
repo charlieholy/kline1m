@@ -3,6 +3,7 @@ var db = levelup(__dirname + "kline1m"); //这里的路径就是物理存储数�
 
 function put(key, value, callback) {
     if (key && value) {
+        console.log("key: " + key + " value: " + value)
         db.put(key, value, function (error) {
             callback(error);
         })
