@@ -1,4 +1,4 @@
-var url = "wss://real.okex.com:10441/websocket"
+var url = "ws://localhost:8081"
 
 var req_orderinfo = {
     'event':'addChannel',
@@ -11,16 +11,16 @@ var substr = JSON.stringify(sub);
 console.log("substr: " + substr);
 
 let WebSocket = require('ws');
-let LevelDb = require("../../db/leveldb/leveldbutils")
 let lp = "okex"
 
 const socket = new WebSocket(url);
 var okCoinWebSocket = {}
 okCoinWebSocket["overtime"] = 8000;
+okCoinWebSocket.lastHeartBeat = new Date().getTime()
 function checkConnect() {
     socket.send("{'event':'ping'}");
     if ((new Date().getTime() - okCoinWebSocket.lastHeartBeat) > okCoinWebSocket.overtime) {
-        onsole.log("socket 连接断开，正在尝试重新建立连接");
+        console.log("socket 连接断开，正在尝试重新建立连接");
         //testWebSocket();
     }
 }
@@ -33,7 +33,7 @@ socket.onopen = function (event) {
 
 socket.onmessage = function (event) {
     let raw_data = event.data;
-    // console.log(raw_data);
+    console.log(raw_data);
     // sub [{}]
     //raw_data = "asd";
     try {
@@ -47,34 +47,6 @@ socket.onmessage = function (event) {
     {
         console.log("e: " + e );
         return;
-    }
-    if(jdata[0]){
-        var indexdata = jdata[0];
-        if(indexdata.data){
-            var data = indexdata.data;
-            if(data.length> 0){
-                //console.log("data: " + data[0]);
-                var tick = data[0];
-                //[时间,开盘价,最高价,最低价,收盘价,成交量]
-                if(tick.length < 5)
-                    return ;
-                var kl = {}
-                var ts = tick[0]
-                kl["ts"]= ts;
-                kl["amount"] = tick[5]
-                kl["open"] = tick[1]
-                kl["close"] = tick[4]
-                kl["low"] = tick[3]
-                kl["high"] = tick[2]
-                var key = lp+ts
-                var value = kl
-                LevelDb.put(key,JSON.stringify(kl),function (err) {
-                    if(err){
-                        console.log("okex leveldb err: " + err);
-                    }
-                });
-            }
-        }
     }
 };
 

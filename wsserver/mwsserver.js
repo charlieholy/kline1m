@@ -1,6 +1,6 @@
 var WebSocket = require('ws');
 var WebSocketServer = WebSocket.Server,
-    wss = new WebSocketServer({ port: 80 });
+    wss = new WebSocketServer({ port: 8081 });
 
 var num = 0;
 let clientnum = 0

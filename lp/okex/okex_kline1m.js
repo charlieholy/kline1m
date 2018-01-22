@@ -21,7 +21,7 @@ okCoinWebSocket.lastHeartBeat = new Date().getTime()
 function checkConnect() {
     socket.send("{'event':'ping'}");
     if ((new Date().getTime() - okCoinWebSocket.lastHeartBeat) > okCoinWebSocket.overtime) {
-        onsole.log("socket 连接断开，正在尝试重新建立连接");
+        console.log("socket 连接断开，正在尝试重新建立连接");
         //testWebSocket();
     }
 }
