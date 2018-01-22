@@ -2,7 +2,6 @@ let WebSocket = require('ws');
 let pako = require('pako');
 let LevelDb = require("../../db/leveldb/leveldbutils")
 let lp = "huopro"
-
 const socket = new WebSocket('wss://api.huobi.pro/ws'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
 
 socket.onopen = function (event) {

@@ -1,0 +1,1 @@
+pm2 start main.js -i 1 -e err.log -o out.log
