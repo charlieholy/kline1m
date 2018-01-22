@@ -16,8 +16,7 @@ let lp = "okex"
 
 const socket = new WebSocket(url);
 var okCoinWebSocket = {}
-okCoinWebSocket.overtime = 8000;
-okCoinWebSocket.lastHeartBeat = new Date().getTime()
+okCoinWebSocket["overtime"] = 8000;
 function checkConnect() {
     socket.send("{'event':'ping'}");
     if ((new Date().getTime() - okCoinWebSocket.lastHeartBeat) > okCoinWebSocket.overtime) {
