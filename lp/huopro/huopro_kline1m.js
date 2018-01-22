@@ -35,12 +35,12 @@ socket.onmessage = function (event) {
     //     "vol": 成交额, 即 sum(每一笔成交价 * 该笔的成交量)
     if(tick){
         var kl = {}
-        kl["ts"]= ts;
-        kl["amount"] = tick.amount
-        kl["open"] = tick.open
-        kl["close"] = tick.close
-        kl["low"] = tick.low
-        kl["high"] = tick.high
+        kl["ts"]= ts.toString();
+        kl["amount"] = tick.amount.toString()
+        kl["open"] = tick.open.toString()
+        kl["close"] = tick.close.toString()
+        kl["low"] = tick.low.toString()
+        kl["high"] = tick.high.toString()
         LevelDb.put(lp+ts,JSON.stringify(kl),function (err) {
             if(err){
                 console.log("huopro leveldb err: " + err);
