@@ -5,7 +5,7 @@ let lp = "huopro"
 var reconnectInterval = 1000
 var connect = function() {
 
-    socket = new WebSocket('wss://api.huobi.pro/ws'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
+    const socket = new WebSocket('wss://api.huobi.pro/ws'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
 
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
