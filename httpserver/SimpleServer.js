@@ -17,7 +17,8 @@ app.get('/', function(req, res) {
     res.status(200).send('root');
     console.log("req: " + req);
 });
-
+//1516723200  1516636800
+//2018/1/24   2018/1/23
 //http://localhost:12306/kline?db=okex1516531
 //http://106.15.226.6:12306/kline?db=okex1516531
 app.get('/kline/',function (req,res) {
