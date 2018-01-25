@@ -21,3 +21,7 @@ levelDb.find(find,function (key,value) {
 
     }
 })
+
+//https://www.okex.com/v2/markets/btc_usdt/kline?since=0&marketFrom=btc_usdt&type=day&limit=1000&coinVol=0
+//https://www.okex.com/v2/markets/btc_usdt/kline?since=0&marketFrom=btc_usdt&type=1hour&limit=1000&coinVol=0
+//https://www.okex.com/v2/markets/btc_usdt/kline?since=0&marketFrom=btc_usdt&type=1min&limit=1000&coinVol=0

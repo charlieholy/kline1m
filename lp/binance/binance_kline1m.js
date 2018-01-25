@@ -43,3 +43,4 @@ var connect = function () {
     };
 }
 connect()
+//https://www.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1d

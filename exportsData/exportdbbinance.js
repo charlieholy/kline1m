@@ -21,3 +21,4 @@ levelDb.find(find,function (key,value) {
 
     }
 })
+//https://www.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1d
