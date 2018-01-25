@@ -1,7 +1,8 @@
 var log4js = require('log4js');
 log4js.configure({
     appenders: { cheese: { type: 'file', filename: 'cheese.log' } },
-    categories: { default: { appenders: ['cheese'], level: 'debug' } }
+    categories: { default: { appenders: ['cheese'], level: 'debug' } },
+    pm2: true
 })
 var Logger = log4js.getLogger('cheese');
 
