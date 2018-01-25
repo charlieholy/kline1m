@@ -1,7 +1,8 @@
 var levelDb = require('../db/leveldb/leveldbexportsutils')
+var fs = require('fs')
 
 var find = {}
-find["prefix"] = "okex";
+find["prefix"] = "binance";
 levelDb.find(find,function (key,value) {
     //lvdatavalue;
     if(key==null) {
@@ -10,6 +11,11 @@ levelDb.find(find,function (key,value) {
     //console.log(value);
     try {
         console.log(value);
+        fs.appendFileSync('binance.txt', value + "\n",  function(err) {
+            if (err) {
+                return console.error(err);
+            }
+        })
     }
     catch (e){
 
