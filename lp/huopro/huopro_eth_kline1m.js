@@ -2,6 +2,7 @@ let WebSocket = require('ws');
 let pako = require('pako');
 let LevelDb = require("../../db/leveldb/leveldbutils")
 let lp = "huopro"
+let symbol = "_eth_"
 var reconnectInterval = 1000
 var connect = function() {
 
@@ -9,7 +10,7 @@ var connect = function() {
 
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
-        socket.send(JSON.stringify({'sub': 'market.btcusdt.kline.1min'}));
+        socket.send(JSON.stringify({'sub': 'market.ethusdt.kline.1min'}));
     };
 
     socket.onmessage = function (event) {
@@ -44,7 +45,7 @@ var connect = function() {
             kl["close"] = tick.close.toString()
             kl["low"] = tick.low.toString()
             kl["high"] = tick.high.toString()
-            LevelDb.put(lp + ts, JSON.stringify(kl), function (err) {
+            LevelDb.put(lp +symbol+ ts, JSON.stringify(kl), function (err) {
                 if (err) {
                     console.log("huopro leveldb err: " + err);
                 }

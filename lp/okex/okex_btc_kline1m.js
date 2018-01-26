@@ -13,6 +13,7 @@ console.log("substr: " + substr);
 let WebSocket = require('ws');
 let LevelDb = require("../../db/leveldb/leveldbutils")
 let lp = "okex"
+let symbol = "_btc_"
 
 var reconnectInterval = 1000
 var connect = function () {
@@ -70,7 +71,7 @@ var connect = function () {
                     kl["close"] = tick[4]
                     kl["low"] = tick[3]
                     kl["high"] = tick[2]
-                    var key = lp + ts
+                    var key = lp + symbol + ts
                     var value = kl
                     LevelDb.put(key, JSON.stringify(kl), function (err) {
                         if (err) {

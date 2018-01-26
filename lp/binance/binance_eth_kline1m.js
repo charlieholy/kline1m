@@ -3,9 +3,10 @@
 let WebSocket = require('ws');
 let LevelDb = require("../../db/leveldb/leveldbutils")
 let lp = "binance"
+let symbol = "_eth_"
 var reconnectInterval = 1000
 var connect = function () {
-    const socket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@kline_1m'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
+    const socket = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@kline_1m'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
 
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
@@ -24,7 +25,7 @@ var connect = function () {
             kl["close"] = k.c
             kl["low"] = k.l
             kl["high"] = k.h
-            var key = lp + ts
+            var key = lp + symbol + ts
             var value = JSON.stringify(kl)
             //console.log("key: " + key)
             //console.log("value: " + value)
@@ -43,4 +44,3 @@ var connect = function () {
     };
 }
 connect()
-//https://www.binance.com/api/v1/klines?symbol=BTCUSDT&interval=1d

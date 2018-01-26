@@ -3,6 +3,7 @@
 let WebSocket = require('ws');
 let LevelDb = require("../../db/leveldb/leveldbutils")
 let lp = "bitfinex"
+let symbol = "_ltc_"
 var reconnectInterval = 1000
 var connect = function () {
 
@@ -11,7 +12,7 @@ var connect = function () {
         {
             event: "subscribe",
             channel: "candles",
-            key: "trade:1m:tBTCUSD"
+            key: "trade:1m:tLTCUSD"
         }
     )
 
@@ -43,7 +44,7 @@ var connect = function () {
                 kl["close"] = tick[2]
                 kl["low"] = tick[4]
                 kl["high"] = tick[3]
-                var key = lp + ts
+                var key = lp + symbol + ts
                 var value = kl
                 //console.log("key: " + key)
                 //console.log("value: " + value)
