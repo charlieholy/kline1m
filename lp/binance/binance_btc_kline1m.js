@@ -7,7 +7,8 @@ let symbol = "_btc_"
 var reconnectInterval = 1000
 var connect = function () {
     const socket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@kline_1m'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
-
+    var lastamount = 0
+    var lastkl = {}
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
     };
@@ -29,11 +30,20 @@ var connect = function () {
             var value = JSON.stringify(kl)
             //console.log("key: " + key)
             //console.log("value: " + value)
-            LevelDb.put(key, value, function (err) {
-                if (err) {
-                    console.log("huopro leveldb err: " + err);
-                }
-            });
+            var amount = Number(k.v)
+            if(amount > lastamount){
+                lastamount = amount
+                lastkl = kl
+            }
+            else{
+                lastamount = 0
+                LevelDb.put(key, JSON.stringify(lastkl), function (err) {
+                    if (err) {
+                        console.log("huopro leveldb err: " + err);
+                    }
+                });
+            }
+
         }
         //console.log(raw_data)
     };
