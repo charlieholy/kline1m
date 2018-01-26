@@ -5,7 +5,8 @@ let lp = "huopro"
 let symbol = "_ltc_"
 var reconnectInterval = 1000
 var connect = function() {
-
+    var lastamount = 0
+    var lastkl = {}
     const socket = new WebSocket('wss://api.huobi.pro/ws'); //如果symbol = 'btccny'或者'ltccny' 请使用wss://api.huobi.com/ws
 
     socket.onopen = function (event) {
@@ -45,11 +46,20 @@ var connect = function() {
             kl["close"] = tick.close.toString()
             kl["low"] = tick.low.toString()
             kl["high"] = tick.high.toString()
-            LevelDb.put(lp +symbol+ ts, JSON.stringify(kl), function (err) {
-                if (err) {
-                    console.log("huopro leveldb err: " + err);
-                }
-            });
+            var amount = tick.amount
+            if(amount> lastamount){
+                lastamount = amount
+                lastkl = kl
+            }
+            else{
+                lastamount = 0
+                LevelDb.put(lp + symbol + ts, JSON.stringify(lastkl), function (err) {
+                    if (err) {
+                        console.log("huopro leveldb err: " + err);
+                    }
+                });
+            }
+
         }
 
 
