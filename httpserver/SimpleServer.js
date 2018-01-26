@@ -4,6 +4,7 @@ app.use(bodyParser.json());
 var fs = require('fs');
 var http = require('http');
 var levelDb = require('../db/leveldb/leveldbutils')
+var leveltickDb = require('../db/leveldb/leveldbtickutils')
 app.use(bodyParser.urlencoded({ extended: false }));
 var httpsServer = http.createServer(app);
 var PORT = 12306;
@@ -30,6 +31,30 @@ app.get('/kline/',function (req,res) {
     var find = {}
     find["prefix"] = db;
     levelDb.find(find,function (key,value) {
+        //lvdatavalue;
+        if(key==null) {
+            res.json(lvdata)
+        }
+        //console.log(value);
+        try {
+            lvdata.push(JSON.parse(value));
+        }
+        catch (e){
+
+        }
+    })
+
+});
+//http://106.15.226.6:12306/tiker?db=okex_btc_
+app.get('/tiker/',function (req,res) {
+    console.log("originalUrl: " + req.originalUrl)
+    var db = req.query.db;
+    console.log("db: " + db);
+    res.status(200)
+    var lvdata = [];
+    var find = {}
+    find["prefix"] = db;
+    leveltickDb.find(find,function (key,value) {
         //lvdatavalue;
         if(key==null) {
             res.json(lvdata)
