@@ -47,7 +47,7 @@ var connect = function () {
 
     socket.onmessage = function (event) {
         let raw_data = event.data;
-        console.log(raw_data);
+        //console.log(raw_data);
         // sub [{}]
         //raw_data = "asd";
         try {
