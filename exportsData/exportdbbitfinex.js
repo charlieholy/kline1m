@@ -1,8 +1,8 @@
 var levelDb = require('../db/leveldb/leveldbexportsutils')
 var fs = require('fs')
-
+var symbol = "_btc_"
 var find = {}
-find["prefix"] = "bitfinex";
+find["prefix"] = "bitfinex"+symbol;
 levelDb.find(find,function (key,value) {
     //lvdatavalue;
     if(key==null) {
@@ -11,7 +11,7 @@ levelDb.find(find,function (key,value) {
     //console.log(value);
     try {
         console.log(value);
-        fs.appendFile('bitfinex.txt', value + "\n",  function(err) {
+        fs.appendFile(symbol+'bitfinex.txt', value + "\n",  function(err) {
             if (err) {
                 return console.error(err);
             }
