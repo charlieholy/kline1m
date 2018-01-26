@@ -1,0 +1,5 @@
+require("./lp/okex/okex_btc_tick")
+require("./lp/bitfinex/bitfinex_btc_tick")
+require("./lp/binance/binance_btc_tick")
+require("./lp/binance/binance_ltc_tick")
+require("./lp/binance/binance_eth_tick")

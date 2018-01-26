@@ -1,7 +1,7 @@
 //wss://stream.binance.com:9443/ws/ethbtc@kline_1m
 
 let WebSocket = require('ws');
-let LevelDb = require("../../db/leveldb/leveldbutils")
+let LevelDb = require("../../db/leveldb/leveldbtickutils")
 let lp = "bitfinex"
 let symbol = "_btc_"
 var reconnectInterval = 1000
