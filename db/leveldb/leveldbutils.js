@@ -1,5 +1,5 @@
 var levelup = require('level');
-var db = levelup(__dirname + "/kline1m"); //这里的路径就是物理存储数据的文件路径,建议不要放到项目中.
+var db = levelup(__dirname + "/kline1m" + new Date()); //这里的路径就是物理存储数据的文件路径,建议不要放到项目中.
 let logger = require("../../log4js/Loger")
 
 
