@@ -32,6 +32,16 @@ var connect = function() {
         }
 
         var ts = data.ts;
+        var ch = data.ch
+        if(ch == "market.ethusdt.kline.1min"){
+            symbol = "_eth_"
+        }
+        else if(ch == "market.btcusdt.kline.1min"){
+            symbol = "_btc_"
+        }
+        else if(ch == "market.ltcusdt.kline.1min"){
+            symbol = "_ltc_"
+        }
         var tick = data.tick;
         // "amount": 成交量,
         //     "count": 成交笔数,

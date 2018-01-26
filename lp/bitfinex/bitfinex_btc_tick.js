@@ -51,7 +51,7 @@ var connect = function () {
         catch (e){
 
         }
-        console.log("da: " + raw_data)
+        //console.log("da: " + raw_data)
         if(data.pair){
             var pair = data.pair
             var chnid = data.chanId;
