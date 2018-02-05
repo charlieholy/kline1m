@@ -7,7 +7,7 @@ log4js.configure({
         cheese: { type: 'file', filename: 'cheese.log' },
         crash: {//错误日志
             type: 'dateFile',
-            filename: 'crash',
+            filename: 'ch/crash',
             pattern: '-yyyy-MM-dd-hh-mm-ss.log',
             alwaysIncludePattern: true
         },},
