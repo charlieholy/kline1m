@@ -18,6 +18,7 @@ var connect = function (lp,url) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
         setInterval(checkConnect, 5000);
         //console.log("state: " + socket.readyState)
+        ev.evE.emit("onopen",lp)
     };
 
     socket.onmessage = function (event) {

@@ -1,5 +1,6 @@
 var conws = require("./wstmplete")
 var clps = require("../config")
+require("./okex")
 var ev = require("./bowevent")
 
 
@@ -9,13 +10,7 @@ for(v in lps){
     cws.run()
 }
 
-var req_orderinfo = {
-    'event': 'addChannel',
-    'channel': 'ok_sub_spot_btc_usdt_kline_1min',
-}
-var d = {}
-d.lp = "okex"
-d.req = JSON.stringify(req_orderinfo)
+
 ev.evE.emit("sub",d);
 ev.evE.on("msg",function (dd) {
     var lp = dd.lp
@@ -24,10 +19,10 @@ ev.evE.on("msg",function (dd) {
     }
 
 })
-function sub() {
-    ev.evE.emit("sub",d);
-}
-var reconnectInterval = 5000
-setTimeout(sub, reconnectInterval);
+ev.evE.on("onopen",function (lp) {
+    if("okex" == lp){
+        ev.evE.emit("sub",d);
+    }
+})
 
 
