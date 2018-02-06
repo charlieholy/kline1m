@@ -17,11 +17,16 @@ var connect = function (lp,url) {
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
         setInterval(checkConnect, 5000);
+        //console.log("state: " + socket.readyState)
     };
 
     socket.onmessage = function (event) {
         let raw_data = event.data;
         ev.evE.emit(lp,raw_data);
+        var d = {}
+        d.lp = lp;
+        d.msg = raw_data;
+        ev.evE.emit("msg",d);
     };
 
     socket.onerror = function (event) {
@@ -44,6 +49,18 @@ var connect = function (lp,url) {
                 return;
             }
         }
+    })
+
+    ev.evE.on("sub",function (data) {
+        var substr = data.req
+        var lp = data.lp
+        //console.log("state: " + socket.readyState)
+        if(socket.readyState == 1 && lp==m_lp){
+
+            socket.send(substr);
+        }
+
+
     })
 }
 
