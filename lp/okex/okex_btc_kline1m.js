@@ -83,6 +83,10 @@ var connect = function () {
         }
     };
 
+    socket.onerror = function (event) {
+        console.log('WebSocket error at time: ' + new Date());
+        setTimeout(connect, reconnectInterval);
+    }
     socket.onclose = function (event) {
         console.log('WebSocket close at time: ' + new Date());
         setTimeout(connect, reconnectInterval);
