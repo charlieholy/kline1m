@@ -9,10 +9,14 @@ var connect = function (lp,url) {
     const socket = new WebSocket(url);
 
     function checkConnect() {
+        if("bitfinex" == lp || "okex" == lp){
+            socket.send("{'event':'ping'}");
+        }
     }
 
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
+        setInterval(checkConnect, 5000);
     };
 
     socket.onmessage = function (event) {
