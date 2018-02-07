@@ -190,7 +190,28 @@ client.lrem(key,0,1,function(err,res){
     }
 });
 
+function lrange(key,start,end) {
+    client.lrange(key,start,end,function(err,res){
+        if(err){
+            console.log(err);
+        } else{
+            console.log(util.inspect(res));
+        }
+    });
+}
 
+function rpush(key,value) {
+    client.rpush(key,value,function(err,res){
+        if(err){
+            console.log(err);
+        } else{
+            console.log(util.inspect(res));
+        }
+    });
+}
+
+exports.rpush = rpush;
+exports.lrange = lrange;
 //其他关于集合和有序集合操作类似
 
 
