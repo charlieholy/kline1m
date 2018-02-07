@@ -37,7 +37,7 @@ var util = require('util');
 
 var client = redis.createClient(6379,'127.0.0.1');
 
-/*
+
 //字符串类型的数据操作
 var key="game:diamond";
 var value="100";
@@ -189,7 +189,7 @@ client.lrem(key,0,1,function(err,res){
         console.log(util.inspect(res));
     }
 });
-*/
+
 function lrange(key,start,end) {
     client.lrange(key,start,end,function(err,res){
         if(err){
