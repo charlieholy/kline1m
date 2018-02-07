@@ -1,16 +1,16 @@
 var conws = require("./wstmplete")
-var clps = require("../config")
+var config = require("../config").config
 require("./okex")
 var ev = require("./bowevent")
 
 
-var lps = clps.lps
+var lps = config.lps
 for(v in lps){
     var cws = new conws(lps[v])
     cws.run()
 }
 
-
+/*
 ev.evE.emit("sub",d);
 ev.evE.on("msg",function (dd) {
     var lp = dd.lp
@@ -24,5 +24,5 @@ ev.evE.on("onopen",function (lp) {
         ev.evE.emit("sub",d);
     }
 })
-
+*/
 
