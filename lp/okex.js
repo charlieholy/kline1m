@@ -17,10 +17,8 @@ ev.evE.on("onopen"+name,function () {
         if (btc[i]) {
             console.log("btc i: " + i + " is true");
             sub_1min.channel = "ok_sub_spot_" + i + "_btc_kline_1min"
-            var d = {}
-            d.lp = "okex"
-            d.req = JSON.stringify(sub_1min);
-            ev.evE.emit("sub"+name, d);
+            var req = JSON.stringify(sub_1min);
+            ev.evE.emit("sub"+name, req);
 
         }
     }
@@ -28,10 +26,8 @@ ev.evE.on("onopen"+name,function () {
         if (usdt[i]) {
             console.log("usdt i: " + i + " is true");
             sub_1min.channel = "ok_sub_spot_" + i + "_usdt_kline_1min"
-            var d = {}
-            d.lp = "okex"
-            d.req = JSON.stringify(sub_1min);
-            ev.evE.emit("sub"+name, d);
+            var req = JSON.stringify(sub_1min);
+            ev.evE.emit("sub"+name, req);
         }
     }
 })

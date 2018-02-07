@@ -50,10 +50,9 @@ var connect = function (lp,url) {
     })
 
     ev.evE.on("sub"+lp,function (data) {
-        var substr = data.req
-        //console.log("state: " + socket.readyState)
+        var req = data;
         if(socket.readyState == 1){
-            socket.send(substr);
+            socket.send(req);
 
         }
 
