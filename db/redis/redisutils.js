@@ -203,9 +203,9 @@ function lrange(key,start,end) {
 function rpush(key,value) {
     client.rpush(key,value,function(err,res){
         if(err){
-            console.log(err);
+            console.log("err: " + err);
         } else{
-            console.log(util.inspect(res));
+            console.log("res: " + util.inspect(res));
         }
     });
 }

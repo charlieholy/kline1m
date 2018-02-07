@@ -1,5 +1,7 @@
 var ev = require("./bowevent")
+var moment = require("moment")
 var config = require("../config").config
+var redis = require("../db/redis/redisutils")
 var name = "okex"
 
 var sub_1min = {
@@ -42,7 +44,9 @@ ev.evE.on("msg"+name,function (msg) {
         return;
     }
     if (jdata[0]) {
+
         var indexdata = jdata[0];
+        var channel = indexdata.channel;
         if (indexdata.data) {
             var data = indexdata.data;
             if (data.length > 0) {
@@ -59,13 +63,11 @@ ev.evE.on("msg"+name,function (msg) {
                 kl["close"] = tick[4]
                 kl["low"] = tick[3]
                 kl["high"] = tick[2]
-                var key = lp + symbol + ts
-                var value = kl
-                LevelDb.put(key, JSON.stringify(kl), function (err) {
-                    if (err) {
-                        console.log("okex leveldb err: " + err);
-                    }
-                });
+                var key = channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                var value = JSON.stringify(kl)
+                console.log("key: " + key);
+                console.log("value: " + value)
+                redis.rpush(key, value);
             }
         }
     }
