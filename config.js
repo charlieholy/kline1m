@@ -22,11 +22,6 @@ var config = {
             open:true,
             url:"wss://api.huobi.pro/ws"
         },
-        binance:{
-            name:"binance",
-            open:true,
-            url:"wss://stream.binance.com:9443/ws/btcusdt@depth5"
-        },
         bitfinex:{
             name:"bitfinex",
             open:true,

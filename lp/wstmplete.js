@@ -15,7 +15,7 @@ var connect = function (lp,url) {
     }
 
     socket.onopen = function (event) {
-        console.log(lp + ' WebSocket connect at time: ' + new Date());
+        console.log(lp + " " + url + ' WebSocket connect at time: ' + new Date());
         setInterval(checkConnect, 5000);
         //console.log("state: " + socket.readyState)
         ev.evE.emit("onopen"+lp);
@@ -24,6 +24,14 @@ var connect = function (lp,url) {
     socket.onmessage = function (event) {
         let raw_data = event.data;
         ev.evE.emit(lp,raw_data);
+
+        if("binance" == lp){
+            var msg = {}
+            msg.url = url
+            msg.data = raw_data
+            ev.evE.emit("msg"+lp,msg);
+            return;
+        }
         ev.evE.emit("msg"+lp,raw_data);
     };
 

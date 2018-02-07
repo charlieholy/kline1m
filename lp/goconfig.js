@@ -1,6 +1,9 @@
 var conws = require("./wstmplete")
 var config = require("../config").config
 require("./okex")
+require("./huopro")
+require("./binance")
+require("./bitfinex")
 var ev = require("./bowevent")
 
 var lps = config.lps

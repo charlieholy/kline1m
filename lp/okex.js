@@ -81,7 +81,7 @@ ev.evE.on("msg"+name,function (msg) {
                 kl.timestamp = tick.timestamp.toString()
                 kl.vol = tick.vol
                 var ts = tick.timestamp
-                var key = channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                var key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
                 var value = JSON.stringify(kl)
                 //console.log("key: " + key);
                 //console.log("value: " + value)
@@ -106,7 +106,7 @@ ev.evE.on("msg"+name,function (msg) {
                     kl["close"] = tick[4]
                     kl["low"] = tick[3]
                     kl["high"] = tick[2]
-                    var key = channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                    var key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
                     var value = JSON.stringify(kl)
                    // console.log("key: " + key);
                     //console.log("value: " + value)
