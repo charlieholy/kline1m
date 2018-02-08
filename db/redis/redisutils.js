@@ -195,7 +195,12 @@ function lrange(key,start,end) {
         if(err){
             console.log(err);
         } else{
-            console.log(util.inspect(res));
+            //console.log(util.inspect(res));
+            console.log("================")
+            //console.log(res);
+            res.forEach(function (t) {
+                console.log(t)
+            })
         }
     });
 }
