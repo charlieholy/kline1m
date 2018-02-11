@@ -1,5 +1,5 @@
 var ppdb = require("../db/sqlite3/sqlite3Helps")
-var redis = require("../db/redis/redisutils")
+//var redis = require("../db/redis/redisutils")
 var ev = require("./bowevent")
 
 ev.evE.on("pushdb",function (key,value) {

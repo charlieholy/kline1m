@@ -1,7 +1,6 @@
 var ev = require("./bowevent")
 var moment = require("moment")
 var config = require("../config").config
-var redis = require("../db/redis/redisutils")
 let pako = require('pako');
 var name = "huopro"
 

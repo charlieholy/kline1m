@@ -1,7 +1,7 @@
 // used:
 var HandleDB = require("./sqlite3Handle")
 let db = new HandleDB({
-    databaseFile: './master.db',
+    databaseFile: './databases/master.db',
     tableName: 'dboo2'
 });
 

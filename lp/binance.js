@@ -1,7 +1,6 @@
 var ev = require("./bowevent")
 var moment = require("moment")
 var config = require("../config").config
-var redis = require("../db/redis/redisutils")
 var name = "binance"
 
 var kline1m = "wss://stream.binance.com:9443/ws/btcusdt@kline_1m"
