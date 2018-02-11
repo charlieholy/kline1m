@@ -4,6 +4,7 @@ var redis = require('redis'),
     RDS_OPTS = {},            //设置项
     client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);
 
+
 /*   Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。
     string ==>
     SET name "runoob"
@@ -36,6 +37,11 @@ var redis = require('redis');
 var util = require('util');
 
 var client = redis.createClient(6379,'127.0.0.1');
+client.select(3,function (e) {
+
+});
+
+//LLEN KEY
 
 /*
 //字符串类型的数据操作

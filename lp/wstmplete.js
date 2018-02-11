@@ -35,9 +35,9 @@ var connect = function (lp,url) {
         ev.evE.emit("msg"+lp,raw_data);
     };
 
-    socket.onerror = function (event) {
-        console.log(lp+ 'WebSocket error at time: ' + new Date());
-        setTimeout(connect, reconnectInterval,lp,url);
+   socket.onerror = function (event) {
+       console.log(lp+ 'WebSocket error at time: ' + new Date());
+        //setTimeout(connect, reconnectInterval,lp,url);
     }
     socket.onclose = function (event) {
         console.log(lp+ 'WebSocket close at time: ' + new Date());
