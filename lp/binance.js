@@ -16,7 +16,7 @@ var btc = markets.btc
 var usdt = markets.usdt
 for (i in btc) {
     if (btc[i]) {
-        console.log("btc i: " + i + " is true");
+        //console.log("btc i: " + i + " is true");
         lp.url = "wss://stream.binance.com:9443/ws/" + i + "btc@kline_1m";
         var cws = new conws(lp);
         cws.run()
@@ -27,7 +27,7 @@ for (i in btc) {
 }
 for (i in usdt) {
     if (usdt[i]) {
-        console.log("usdt i: " + i + " is true");
+        //console.log("usdt i: " + i + " is true");
         lp.url = "wss://stream.binance.com:9443/ws/" + i + "usdt@kline_1m";
         var cws = new conws(lp);
         cws.run()
@@ -51,6 +51,8 @@ ev.evE.on("msg" + name, function (msg) {
     }
     //kline_1m
     var len = msg.url.length;
+    var key
+    var value
     if ("kline_1m" == url.substr(len - 8, len)) {
         var ts = data.E
         var k = data.k
@@ -62,9 +64,8 @@ ev.evE.on("msg" + name, function (msg) {
             kl["close"] = k.c
             kl["low"] = k.l
             kl["high"] = k.h
-            var key = name + "_" + url + "_" + moment(Number(ts)).format('YYYY-MM-DD')
-            var value = JSON.stringify(kl)
-            redis.rpush(key, value);
+            key = name + "_" + url + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+            value = JSON.stringify(kl)
         }
     }
     //ticker
@@ -77,8 +78,8 @@ ev.evE.on("msg" + name, function (msg) {
         kl.timestamp = data.E.toString()
         kl.vol = data.v
         var ts = kl.timestamp
-        var key = name + "_" + url + "_" + moment(Number(ts)).format('YYYY-MM-DD')
-        var value = JSON.stringify(kl)
-        redis.rpush(key, value);
+        key = name + "_" + url + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+        value = JSON.stringify(kl)
     }
+    ev.evE.emit("pushdb",key,value)
 })

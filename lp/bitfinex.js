@@ -24,7 +24,7 @@ var usdt = markets.usdt
 ev.evE.on("onopen"+name,function () {
     for (i in btc) {
         if (btc[i]) {
-            console.log("btc i: " + i + " is true");
+            //console.log("btc i: " + i + " is true");
             sub_1min.key = "trade:1m:t" + i.toUpperCase() + "BTC";
             console.log("key: " + sub_1min.key)
             var req = JSON.stringify(sub_1min);
@@ -38,7 +38,7 @@ ev.evE.on("onopen"+name,function () {
     }
     for (i in usdt) {
         if (usdt[i]) {
-            console.log("usdt i: " + i + " is true");
+            //console.log("usdt i: " + i + " is true");
             sub_1min.key = "trade:1m:t" + i.toUpperCase() + "USD";
             var req = JSON.stringify(sub_1min);
             ev.evE.emit("sub"+name, req);
@@ -86,6 +86,8 @@ ev.evE.on("msg"+name,function (msg) {
             return
         }
         var chid = data[0];
+        var key
+        var value
         if(tickerchannel[chid]){
             var tick = data[1];
             if (tick.length > 4) {
@@ -98,10 +100,9 @@ ev.evE.on("msg"+name,function (msg) {
                 kl.timestamp = new Date().getTime()
                 kl.vol = tick[7]
                 var ts = kl.timestamp
-                var key = name + "_" + tickerchannel[chid] + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                key = name + "_" + tickerchannel[chid] + "_" + moment(Number(ts)).format('YYYY-MM-DD')
                 kl.key = key
-                var value = JSON.stringify(kl)
-                redis.rpush(key,value)
+                value = JSON.stringify(kl)
             }
         }
         else if(kline1mchannel[chid]){
@@ -116,11 +117,11 @@ ev.evE.on("msg"+name,function (msg) {
                 kl["close"] = tick[2]
                 kl["low"] = tick[4]
                 kl["high"] = tick[3]
-                var key = name + "_" + kline1mchannel[chid] + "_" + moment(Number(ts)).format('YYYY-MM-DD')
-                var value = JSON.stringify(kl)
-                redis.rpush(key,value)
+                key = name + "_" + kline1mchannel[chid] + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                value = JSON.stringify(kl)
             }
         }
+        ev.evE.emit("pushdb",key,value)
 
     }
 })

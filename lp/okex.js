@@ -22,7 +22,7 @@ var usdt = markets.usdt
 ev.evE.on("onopen"+name,function () {
     for (i in btc) {
         if (btc[i]) {
-            console.log("btc i: " + i + " is true");
+            //console.log("btc i: " + i + " is true");
             sub_1min.channel = "ok_sub_spot_" + i + "_btc_kline_1min"
             var req = JSON.stringify(sub_1min);
             ev.evE.emit("sub"+name, req);
@@ -35,7 +35,7 @@ ev.evE.on("onopen"+name,function () {
     }
     for (i in usdt) {
         if (usdt[i]) {
-            console.log("usdt i: " + i + " is true");
+            //console.log("usdt i: " + i + " is true");
             sub_1min.channel = "ok_sub_spot_" + i + "_usdt_kline_1min"
             var req = JSON.stringify(sub_1min);
             ev.evE.emit("sub"+name, req);
@@ -62,6 +62,8 @@ ev.evE.on("msg"+name,function (msg) {
         var channel = indexdata.channel;
         var len = channel.length;
         //ticker
+        var key;
+        var value;
         if("ticker" == channel.substr(len-6,len)){
             if (indexdata.data) {
                 var tick = indexdata.data;
@@ -81,11 +83,10 @@ ev.evE.on("msg"+name,function (msg) {
                 kl.timestamp = tick.timestamp.toString()
                 kl.vol = tick.vol
                 var ts = tick.timestamp
-                var key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
-                var value = JSON.stringify(kl)
+                key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                value = JSON.stringify(kl)
                 //console.log("key: " + key);
                 //console.log("value: " + value)
-                redis.rpush(key, value);
             }
         }
         //1min
@@ -106,14 +107,14 @@ ev.evE.on("msg"+name,function (msg) {
                     kl["close"] = tick[4]
                     kl["low"] = tick[3]
                     kl["high"] = tick[2]
-                    var key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
-                    var value = JSON.stringify(kl)
+                    key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
+                    value = JSON.stringify(kl)
                    // console.log("key: " + key);
                     //console.log("value: " + value)
-                    redis.rpush(key, value);
                 }
             }
         }
+        ev.evE.emit("pushdb",key,value)
 
     }
 })

@@ -15,7 +15,7 @@ var usdt = markets.usdt
 ev.evE.on("onopen"+name,function () {
     for (i in btc) {
         if (btc[i]) {
-            console.log("btc i: " + i + " is true");
+            //console.log("btc i: " + i + " is true");
             sub_1min.sub = "market."+ i +"btc.kline.1min"
             var req = JSON.stringify(sub_1min);
             ev.evE.emit("sub"+name, req);
@@ -23,7 +23,7 @@ ev.evE.on("onopen"+name,function () {
     }
     for (i in usdt) {
         if (usdt[i]) {
-            console.log("usdt i: " + i + " is true");
+            //console.log("usdt i: " + i + " is true");
             sub_1min.sub = "market."+ i +"usdt.kline.1min"
             var req = JSON.stringify(sub_1min);
             ev.evE.emit("sub"+name, req);
@@ -61,7 +61,7 @@ ev.evE.on("msg"+name,function (msg) {
         kl["high"] = tick.high.toString()
         var key = name+"_"+ch + "_" + moment(Number(ts)).format('YYYY-MM-DD')
         var value = JSON.stringify(kl)
-        redis.rpush(key, value);
+        ev.evE.emit("pushdb",key,value)
     }
 
 })

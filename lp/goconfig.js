@@ -1,5 +1,6 @@
 var conws = require("./wstmplete")
 var config = require("../config").config
+require("./pushdb")
 require("./okex")
 require("./huopro")
 require("./binance")
