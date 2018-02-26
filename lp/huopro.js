@@ -11,7 +11,9 @@ var markets = config.markets;
 var btc = markets.btc
 var usdt = markets.usdt
 
-ev.evE.on("onopen"+name,function () {
+var sub_timestamp = 0;
+
+var req_sub = function () {
     for (i in btc) {
         if (btc[i]) {
             //console.log("btc i: " + i + " is true");
@@ -28,9 +30,23 @@ ev.evE.on("onopen"+name,function () {
             ev.evE.emit("sub"+name, req);
         }
     }
+}
+
+ev.evE.on("check_sub",function () {
+    sub_timestamp++;
+    if(sub_timestamp == 5)
+    {
+        req_sub()
+    }
+})
+ev.evE.on("onopen"+name,function () {
+    req_sub()
 })
 
 ev.evE.on("msg"+name,function (msg) {
+
+
+
     let jmsg = pako.inflate(new Uint8Array(msg), {to: 'string'});
     //console.log("msg: " + jmsg)
     try {
@@ -51,6 +67,7 @@ ev.evE.on("msg"+name,function (msg) {
     //     "high": 最高价,
     //     "vol": 成交额, 即 sum(每一笔成交价 * 该笔的成交量)
     if (tick) {
+        sub_timestamp = 0
         var kl = {}
         kl["ts"] = ts.toString();
         kl["amount"] = tick.amount.toString()

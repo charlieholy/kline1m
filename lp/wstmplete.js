@@ -12,6 +12,7 @@ var connect = function (lp,url) {
         if("bitfinex" == lp || "okex" == lp){
             socket.send("{'event':'ping'}");
         }
+        ev.evE.emit("check_sub");
     }
 
     socket.onopen = function (event) {
@@ -48,7 +49,7 @@ var connect = function (lp,url) {
         if("huopro" == lp)
         {
             let json = pako.inflate(new Uint8Array(m_data), {to: 'string'});
-            //console.log("huopro: " + json);
+            console.log("huopro: " + json);
             let data = JSON.parse(json);
             if (data['ping']) {
                 socket.send(JSON.stringify({'pong': data['ping']}));
