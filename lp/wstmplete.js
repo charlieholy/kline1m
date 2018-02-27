@@ -1,7 +1,12 @@
 let WebSocket = require('ws');
 var ev = require("./bowevent")
 let pako = require('pako');
+var Log = require("../log4js/Loger")
 var reconnectInterval = 5000
+
+var isconnect = function () {
+    
+}
 
 var connect = function (lp,url) {
     let m_lp = lp
@@ -49,7 +54,7 @@ var connect = function (lp,url) {
         if("huopro" == lp)
         {
             let json = pako.inflate(new Uint8Array(m_data), {to: 'string'});
-            console.log("huopro: " + json);
+            //console.log("huopro: " + json);
             let data = JSON.parse(json);
             if (data['ping']) {
                 socket.send(JSON.stringify({'pong': data['ping']}));
@@ -62,10 +67,12 @@ var connect = function (lp,url) {
         var req = data;
         if(socket.readyState == 1){
             socket.send(req);
-
+            Log.debug("sub: " + lp + " " + req);
         }
-
-
+        else {
+            setTimeout(connect, reconnectInterval,lp,url);
+            Log.debug("sub: socket not ready!");
+        }
     })
 }
 
