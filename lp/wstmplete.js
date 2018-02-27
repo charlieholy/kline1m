@@ -8,6 +8,8 @@ var isconnect = function () {
     
 }
 
+var pingStamp = 0;
+
 var connect = function (lp,url) {
     let m_lp = lp
     let m_url = url
@@ -47,16 +49,33 @@ var connect = function (lp,url) {
     }
     socket.onclose = function (event) {
         console.log(lp+ 'WebSocket close at time: ' + new Date());
+        socket.close()
         setTimeout(connect, reconnectInterval,lp,url);
     };
+
+    var ready2send = function () {
+        if( socket.readyState == 3)
+        {
+            console.log("====================ready2send")
+            socket.close();
+            setTimeout(connect, reconnectInterval,lp,url);
+        }
+    }
+
     ev.evE.on(lp,function (data) {
         var m_data = data
         if("huopro" == lp)
         {
             let json = pako.inflate(new Uint8Array(m_data), {to: 'string'});
-            //console.log("huopro: " + json);
+
             let data = JSON.parse(json);
             if (data['ping']) {
+                console.log("huopro: " + json);
+                if(pingStamp == json)
+                {
+                    return;
+                }
+                pingStamp = json
                 socket.send(JSON.stringify({'pong': data['ping']}));
                 return;
             }
@@ -70,7 +89,7 @@ var connect = function (lp,url) {
             Log.debug("sub: " + lp + " " + req);
         }
         else {
-            setTimeout(connect, reconnectInterval,lp,url);
+            //setTimeout(connect, reconnectInterval,lp,url);
             Log.debug("sub: socket not ready!");
         }
     })
