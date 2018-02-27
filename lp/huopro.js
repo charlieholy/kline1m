@@ -34,7 +34,7 @@ var req_sub = function () {
 
 ev.evE.on("check_sub",function () {
     sub_timestamp++;
-    if(sub_timestamp > 5)
+    if(sub_timestamp > 25)
     {
         sub_timestamp = 0;
         req_sub()
