@@ -76,7 +76,13 @@ var connect = function (lp,url) {
                     return;
                 }
                 pingStamp = json
-                socket.send(JSON.stringify({'pong': data['ping']}));
+                try {
+                    socket.send(JSON.stringify({'pong': data['ping']}));
+                }
+                catch (e)
+                {
+                    console.log("============senderr: " + e );
+                }
                 return;
             }
         }
