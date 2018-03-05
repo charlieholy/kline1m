@@ -50,19 +50,12 @@ var connect = function (lp,url) {
     socket.onclose = function (event) {
         console.log(lp+ 'WebSocket close at time: ' + new Date());
         socket.close()
+        ev.evE.removeListener(lp,onPing);
+        ev.evE.removeListener("sub"+lp,onSub)
         setTimeout(connect, reconnectInterval,lp,url);
     };
 
-    var ready2send = function () {
-        if( socket.readyState == 3)
-        {
-            console.log("====================ready2send")
-            socket.close();
-            setTimeout(connect, reconnectInterval,lp,url);
-        }
-    }
-
-    ev.evE.on(lp,function (data) {
+    var onPing = function (data) {
         var m_data = data
         if("huopro" == lp)
         {
@@ -77,7 +70,7 @@ var connect = function (lp,url) {
                 }
                 pingStamp = json
                 try {
-                    socket.send(JSON.stringify({'pong': data['ping']}));
+                   socket.send(JSON.stringify({'pong': data['ping']}));
                 }
                 catch (e)
                 {
@@ -86,9 +79,9 @@ var connect = function (lp,url) {
                 return;
             }
         }
-    })
+    }
 
-    ev.evE.on("sub"+lp,function (data) {
+    var onSub = function(data){
         var req = data;
         if(socket.readyState == 1){
             socket.send(req);
@@ -98,7 +91,10 @@ var connect = function (lp,url) {
             //setTimeout(connect, reconnectInterval,lp,url);
             Log.debug("sub: socket not ready!");
         }
-    })
+    }
+
+    ev.evE.on(lp,onPing)
+    ev.evE.on("sub"+lp,onSub)
 }
 
 class BaseConn{
