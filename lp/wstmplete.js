@@ -14,6 +14,7 @@ var connect = function (lp,url) {
     let m_lp = lp
     let m_url = url
     const socket = new WebSocket(url);
+    var isDisconn = false;
 
     function checkConnect() {
         if("bitfinex" == lp || "okex" == lp){
@@ -43,16 +44,25 @@ var connect = function (lp,url) {
         ev.evE.emit("msg"+lp,raw_data);
     };
 
+    var reconn = function () {
+        if(!isDisconn)
+        {
+            console.log("reconn");
+            isDisconn = true;
+            setTimeout(connect, reconnectInterval,lp,url);
+        }
+    }
+
    socket.onerror = function (event) {
        console.log(lp+ 'WebSocket error at time: ' + new Date());
-        //setTimeout(connect, reconnectInterval,lp,url);
+        reconn();
     }
     socket.onclose = function (event) {
         console.log(lp+ 'WebSocket close at time: ' + new Date());
         socket.close()
         ev.evE.removeListener(lp,onPing);
         ev.evE.removeListener("sub"+lp,onSub)
-        setTimeout(connect, reconnectInterval,lp,url);
+        reconn();
     };
 
     var onPing = function (data) {
@@ -70,7 +80,7 @@ var connect = function (lp,url) {
                 }
                 pingStamp = json
                 try {
-                   socket.send(JSON.stringify({'pong': data['ping']}));
+                  socket.send(JSON.stringify({'pong': data['ping']}));
                 }
                 catch (e)
                 {
