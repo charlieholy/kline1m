@@ -1,8 +1,8 @@
 var url = "ws://localhost:8081"
 
 var req_orderinfo_btc = {
-    'event': 'addChannel',
-    'channel': 'ok_sub_spot_btc_usdt_ticker',
+    'event': 'subtick',
+    'status': 'open',
 }
 
 let WebSocket = require('ws');

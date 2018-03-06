@@ -80,6 +80,7 @@ ev.evE.on("msg"+name,function (msg) {
         var key = name+"_"+ch + "_" + moment(Number(ts)).format('YYYY-MM-DD')
         var value = JSON.stringify(kl)
         ev.evE.emit("pushdb",key,value)
+        //ev.evE.emit("ticker",value);
     }
 
 })

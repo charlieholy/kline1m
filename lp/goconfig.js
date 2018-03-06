@@ -1,10 +1,11 @@
 var conws = require("./wstmplete")
 var config = require("../config").config
 require("./pushdb")
-//require("./okex")
+require("./okex")
 require("./huopro")
-//require("./binance")
-//require("./bitfinex")
+require("./binance")
+require("./bitfinex")
+require("../wsserver/mwsserver")
 var ev = require("./bowevent")
 
 var lps = config.lps

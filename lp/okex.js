@@ -84,6 +84,7 @@ ev.evE.on("msg"+name,function (msg) {
                 var ts = tick.timestamp
                 key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
                 value = JSON.stringify(kl)
+
                 //console.log("key: " + key);
                 //console.log("value: " + value)
             }
@@ -108,6 +109,7 @@ ev.evE.on("msg"+name,function (msg) {
                     kl["high"] = tick[2]
                     key = name + "_" + channel + "_" + moment(Number(ts)).format('YYYY-MM-DD')
                     value = JSON.stringify(kl)
+                    ev.evE.emit("ticker",value)
                    // console.log("key: " + key);
                     //console.log("value: " + value)
                 }
