@@ -12,8 +12,6 @@ var connect = function() {
     socket.onopen = function (event) {
         console.log(lp + ' WebSocket connect at time: ' + new Date());
         socket.send(JSON.stringify({'sub': 'market.btcusdt.kline.1min'}));
-        socket.send(JSON.stringify({'sub': 'market.ltcusdt.kline.1min'}));
-        socket.send(JSON.stringify({'sub': 'market.ethusdt.kline.1min'}));
     };
 
     socket.onmessage = function (event) {

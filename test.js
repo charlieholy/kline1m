@@ -11,3 +11,8 @@ var d = JSON.parse(s);
 console.log("d: " + d.amount)
 
 console.log(new Date())
+
+var  trade = "market.btcusdt.trade.detail";
+console.log(trade.substr(trade.length-6,trade.length))
+var ss = trade.split('.')
+console.log(ss[1])
