@@ -1,4 +1,4 @@
-var url = "ws://localhost:8081"
+var url = "ws://192.168.88.22:8081"
 
 var req_orderinfo_btc = {
     'event': 'subtick',
@@ -13,7 +13,7 @@ const socket = new WebSocket(url);
 
 socket.onopen = function (event) {
     console.log(' WebSocket connect at time: ' + new Date());
-    socket.send(JSON.stringify(req_orderinfo_btc));
+    //socket.send(JSON.stringify(req_orderinfo_btc));
 };
 
 socket.onmessage = function (event) {

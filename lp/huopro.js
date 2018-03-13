@@ -57,7 +57,7 @@ ev.evE.on("msg"+name,function (msg) {
 
 
     let jmsg = pako.inflate(new Uint8Array(msg), {to: 'string'});
-    //console.log("msg: " + jmsg)
+    console.log("msg: " + jmsg)
     try {
         var data = JSON.parse(jmsg);
     }
@@ -84,7 +84,7 @@ ev.evE.on("msg"+name,function (msg) {
             if(tick)
             {
                 var r_symbol = ch.split('.')[1]
-                //console.log("tick: " + r_symbol + " " + JSON.stringify(tick))
+                console.log("tick: " + r_symbol + " " + JSON.stringify(tick))
                 var r_datas = tick.data
                 var r_amount = 0;
                 var r_price = 0;
@@ -99,7 +99,10 @@ ev.evE.on("msg"+name,function (msg) {
                 if(r_data_size >0)
                 ress.price = r_price / r_data_size
                 ress.ts = tick.ts
-                console.log("ts: " + JSON.stringify(ress))
+                ress.lp = name
+                var tickerRes = JSON.stringify(ress)
+                console.log("ts: " + tickerRes)
+                ev.evE.emit("ticker",tickerRes)
 
             }
         }

@@ -39,10 +39,10 @@ wss.on('connection', function(ws) {
 
 var broadCase = function (msg) {
     wss.clients.forEach(function (ws) {
-        if(ws.isSub)
-        {
+        //if(ws.isSub)
+        //{
             ws.send(msg);
-        }
+       // }
     })
 }
 
